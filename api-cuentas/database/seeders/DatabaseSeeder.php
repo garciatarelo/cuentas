@@ -16,15 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Ana Morales',
-            'email' => 'ana.morales@outlook.com',
-            'password' => bcrypt('password'),
-            'remember_token' => Str::random(10),
-            'img' => 'default.png',
-            'created_at'=>date('Y-m-d h:m:s')//2025-12-12
+        // Ejecutar primero los seeders que insertan usuarios para que las demás
+        // tablas que dependen de users (categories, accounts, transactions)
+        // puedan insertar filas con foreign keys válidas.
+        $this->call([
+            UsersSeeders::class,
+            CategorySeeder::class,
+            AccountSeeder::class,
+            TransactionSeeder::class,
         ]);
     }
 }

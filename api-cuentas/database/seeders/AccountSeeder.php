@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class AccountSeeder extends Seeder
 {
@@ -15,15 +16,17 @@ class AccountSeeder extends Seeder
         DB::table('accounts')->insert([
             [
                 'name' => 'Cuenta de Cheques',
-                'type' => 'chequeos',
+                'amount' => 1000.00,
+                'status' => 'active',
                 'user_id' => 1,
-                'created_at'=>date('Y-m-d h:m:s')//2025-12-12
+                'created_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Cuenta de Ahorros',
-                'type' => 'ahorros',
+                'amount' => 5000.00,
+                'status' => 'active',
                 'user_id' => 2,
-                'created_at'=>date('Y-m-d h:m:s')//2025-12-12
+                'created_at' => date('Y-m-d H:i:s'),
             ],
         ]);
     }
