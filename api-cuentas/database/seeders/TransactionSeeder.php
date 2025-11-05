@@ -16,6 +16,7 @@ class TransactionSeeder extends Seeder
         DB::table('transactions')->insert([
             [
                 'amount' => 2500.00,
+                'type' => 'si',
                 'description' => 'Pago mensual de nómina',
                 'user_id' => 1,
                 'category_id' => 1,
@@ -24,6 +25,7 @@ class TransactionSeeder extends Seeder
             ],
             [
                 'amount' => 75.50,
+                'type' => 'no',
                 'description' => 'Cena con aniversario',
                 'user_id' => 2,
                 'category_id' => 2,

@@ -12,8 +12,7 @@ class TransactionsController extends Controller
      */
     public function index()
     {
-        $data = Transaction::with("user", "category", "account")->get();
-        
+        $data = Transaction::with("user")->get();
         return response()->json([
             'status' => 'ok',
             'data' => $data
@@ -33,7 +32,21 @@ class TransactionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'amount' => 'required|numeric',
+            'type' => 'required|string',
+            'description' => 'nullable|string',
+            'user_id' => 'required',
+            'category_id' => 'required',
+            'account_id' => 'required',
+        ]);
+        $data = Transaction::create($validated);
+
+        return response()->json([
+            'status' => 'ok',
+            'message' => 'Dato Insertado Correctamente',
+            'data' => $data
+        ]);
     }
 
     /**
@@ -41,7 +54,18 @@ class TransactionsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Category::find($id);
+        if ($data) {
+            return response()->json([
+                'status' => 'ok',
+                'message' => 'Transacción encontrada correctamente',
+                'data' => $data
+            ]);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Transacción no encontrada',
+        ],400);
     }
 
     /**
@@ -57,7 +81,23 @@ class TransactionsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'amount' => 'required|numeric',
+            'type' => 'required|string',
+            'description' => 'nullable|string',
+            'user_id' => 'required',
+            'category_id' => 'required',
+            'account_id' => 'required',
+        ]);
+        $data = Transaction::findOrFail($id);
+        $data->update($validated);
+        if ($data) {
+            return response()->json([
+                'status' => 'ok',
+                'message' => 'Dato Actualizado Correctamente',
+            'data' => $data
+        ]);
+    }
     }
 
     /**
@@ -65,6 +105,14 @@ class TransactionsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Transaction::find($id);
+        if ($data) {
+            $data->delete();
+        }
+        return response()->json([
+            'status' => 'ok',
+            'message' => 'Transacción eliminada correctamente',
+        ]);
     }
+
 }

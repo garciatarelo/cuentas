@@ -32,7 +32,18 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|min:2',
+            'type' => 'required|string',
+            'user_id' => 'required',
+        ]);
+        $data = Category::create($validated);
+
+        return response()->json([
+            'status' => 'ok',
+            'message' => 'Dato Insertado Correctamente',
+            'data' => $data
+        ]);
     }
 
     /**
@@ -40,7 +51,18 @@ class CategoriesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Category::find($id);
+        if ($data) {
+            return response()->json([
+                'status' => 'ok',
+                'message' => 'Categoria encontrada correctamente',
+                'data' => $data
+            ]);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Categoria no encontrada',
+        ],400);
     }
 
     /**
@@ -56,7 +78,20 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|min:2',
+            'type' => 'required|string',
+            'user_id' => 'required',
+        ]);
+        $data = Category::findOrFail($id);
+        $data->update($validated);
+        if ($data) {
+            return response()->json([
+                'status' => 'ok',
+                'message' => 'Dato Actualizado Correctamente',
+            'data' => $data
+        ]);
+    }
     }
 
     /**
@@ -64,6 +99,14 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Category::find($id);
+        if ($data) {
+            $data->delete();
+        }
+        return response()->json([
+            'status' => 'ok',
+            'message' => 'Categoria eliminada correctamente',
+        ]);
     }
+
 }

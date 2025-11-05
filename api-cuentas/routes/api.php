@@ -13,6 +13,8 @@ Route::resource('categories', CategoriesController::class);
 
 Route::resource('transactions', TransactionsController::class);
 
+Route::post('changestatus', [AccountsController::class, 'changeStatus']);
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
