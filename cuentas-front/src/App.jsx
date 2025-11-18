@@ -1,37 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import ItemComponent from './components/itemComponent'
-import Button from 'react-bootstrap/Button';
+import {Router, Route, Routes, BrowserRouter} from 'react-router-dom'
+import Home from './views/home'
+import Login from './views/login'
 
-function App() {
-  
-  var x = 0
-
-  //React Mooks - Ganchos de React
-  let[contador, setContador] = useState(10)
-  let[arr, setArr] = useState([])
-
-  let clickButton=()=>{
-    setContador(++contador)
-    console.log(contador)
-    let x = [...arr, contador]
-    setArr(x)
-  }
-
+export default function App() {
   return (
-    <>
-      <h1>Contador</h1>
-      <p>{contador}</p>
-      <Button variant="primary">Primary</Button>
-      
-      <button onClick={clickButton}>Aumentar</button>
-      {arr.map((item) => (
-        <ItemComponent key={item} />
-      ))}
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />}></Route>
+        <Route path='/login' element={<Login />}></Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
-
-export default App
