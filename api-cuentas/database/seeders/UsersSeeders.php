@@ -30,5 +30,14 @@ class UsersSeeders extends Seeder
             'img' => 'default.png',
             'created_at'=>date('Y-m-d h:m:s')//2025-12-12
         ]);
+        DB::table('users')->insert([
+            'name' => 'Administrador',
+            'email' => 'admin123@gmail.com',
+            'password' => bcrypt('password'),
+            'remember_token' => Str::random(10),
+            'img' => 'default.png',
+            'created_at'=>date('Y-m-d h:m:s')//2025-12-12
+        ]);
+        
     }
 }
